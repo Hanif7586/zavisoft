@@ -1,14 +1,20 @@
- Scroll & Gesture Architecture Explanation
-1 How Horizontal Swipe Was Implemented
+# Scroll & Gesture Architecture Explanation
+
+This document explains the Flutter scroll and gesture architecture implemented in our project.
+
+---
+
+## 1. How Horizontal Swipe Was Implemented
 
 Horizontal tab switching is handled entirely by:
 
+```dart
 TabBar(
-controller: _tabController,
+  controller: _tabController,
 )
 
 TabBarView(
-controller: _tabController,
+  controller: _tabController,
 )
 How it works
 
@@ -22,15 +28,15 @@ Flutter internally manages horizontal drag detection for TabBarView
 
 Why this is safe
 
-We did NOT manually attach any horizontal GestureDetector
+No manual GestureDetector attached for horizontal gestures
 
-We did NOT override scroll physics
+No overridden scroll physics
 
 Horizontal gestures are isolated inside TabBarView
 
-Vertical scroll is NOT affected by horizontal swipe
+Vertical scroll is not affected by horizontal swipe
 
-This ensures:
+Benefits:
 
 Predictable gesture behavior
 
@@ -38,18 +44,19 @@ No cross-axis scroll conflicts
 
 No accidental vertical scrolling from horizontal swipes
 
-2 Who Owns the Vertical Scroll and Why
- Vertical Scroll Owner: NestedScrollView
+2. Who Owns the Vertical Scroll and Why
+
+Vertical Scroll Owner: NestedScrollView
 
 There is exactly ONE vertical scrollable in the entire screen:
 
 NestedScrollView(
-headerSliverBuilder: ...,
-body: TabBarView(...)
+  headerSliverBuilder: ...,
+  body: TabBarView(...)
 )
 Why NestedScrollView?
 
-Because we need:
+Required for:
 
 Collapsible header (SliverAppBar)
 
@@ -59,7 +66,7 @@ Shared scroll position across tabs
 
 Pull-to-refresh
 
-No duplicate scrolling
+Avoiding duplicate scrolling
 
 NestedScrollView acts as the single vertical scroll coordinator.
 
@@ -68,31 +75,24 @@ Important Detail
 Inside each tab:
 
 CustomScrollView(
-physics: NeverScrollableScrollPhysics(),
+  physics: NeverScrollableScrollPhysics(),
 )
 
-This disables independent scrolling.
-
-So:
+This disables independent scrolling
 
 Inner slivers render content
 
-But vertical scrolling is controlled ONLY by NestedScrollView
+Vertical scrolling is controlled only by NestedScrollView
 
-This prevents duplicate vertical scrollables
+Prevents duplicate vertical scrollables
 
-No jitter
+Avoids jitter and scroll fight
 
-No scroll fight
+Why SliverOverlapAbsorber + SliverOverlapInjector?
 
-Why SliverOverlapAbsorber + Injector?
+Properly coordinates header collapse
 
-Used to properly coordinate header collapse:
-
-SliverOverlapAbsorber
-SliverOverlapInjector
-
-Without this:
+Without it:
 
 Header collapse may glitch
 
@@ -102,13 +102,12 @@ Scroll offsets may break
 
 This guarantees smooth coordinated scrolling.
 
-3 Trade-offs / Limitations
-️ Trade-offs
+3. Trade-offs / Limitations
 1. NestedScrollView Complexity
 
-NestedScrollView is more complex than a single CustomScrollView.
+More complex than a single CustomScrollView
 
-But it's required for:
+Required for:
 
 Collapsible header
 
@@ -118,9 +117,7 @@ Shared scroll position
 
 2. Large Lists Performance
 
-Currently:
-
-All products load at once
+Currently: All products load at once
 
 If product count grows large:
 
@@ -128,28 +125,20 @@ Pagination or lazy loading will be required
 
 3. Tab State Memory
 
-By default:
-
 Scroll position remains stable across tab switches
 
-If deeper state preservation is required:
+For deeper state preservation:
 
-AutomaticKeepAliveClientMixin can be added
+Use AutomaticKeepAliveClientMixin
 
 4. Pull-to-refresh Scope
 
 Refresh wraps entire NestedScrollView:
 
 RefreshIndicator(
-child: NestedScrollView(...)
+  child: NestedScrollView(...)
 )
-
-This means:
 
 Pull works from any tab
 
 Refresh reloads global product list
-
-If per-tab refresh is needed:
-
-Architecture must change
