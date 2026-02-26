@@ -143,3 +143,10 @@ RefreshIndicator(
 Pull works from any tab
 
 Refresh reloads global product list
+
+
+![2](https://github.com/user-attachments/assets/029fbf80-3088-47cc-aad7-59e44bbb94a7)
+![1](https://github.com/user-attachments/assets/e7180eed-e93c-4181-8abf-da1af54b801d)
+![3](https://github.com/user-attachments/assets/c055e34b-4e53-42b7-bbd6-50059cef8a41)
+![4](https://github.com/user-attachments/assets/82edb1d4-22b9-42bc-a0ff-0a40fbd325f7)
+ 
