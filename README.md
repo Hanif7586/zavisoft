@@ -145,8 +145,9 @@ Pull works from any tab
 Refresh reloads global product list
 
 
-![2](https://github.com/user-attachments/assets/029fbf80-3088-47cc-aad7-59e44bbb94a7)
-![1](https://github.com/user-attachments/assets/e7180eed-e93c-4181-8abf-da1af54b801d)
-![3](https://github.com/user-attachments/assets/c055e34b-4e53-42b7-bbd6-50059cef8a41)
-![4](https://github.com/user-attachments/assets/82edb1d4-22b9-42bc-a0ff-0a40fbd325f7)
+ ![1](https://github.com/user-attachments/assets/cfca7325-04b0-48a5-812e-3367de9dd64b)
+![4](https://github.com/user-attachments/assets/3a375ef8-bf8a-470d-bac5-5bf8ec652aa0)
+![3](https://github.com/user-attachments/assets/e6967966-5da4-444f-b075-ff1fa2a4d7b7)
+![2](https://github.com/user-attachments/assets/4cbefbb7-0d8f-4fb1-abbf-7e92e4008520)
+
  
